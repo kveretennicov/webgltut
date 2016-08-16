@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+<head>
+  <title>GL Tutorial in WebGL 1.0: Hierarchy</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link rel="stylesheet" href="../css/main.css" type="text/css">
+  <script src="../js/stats.min.js" type="text/javascript"></script>
+  <script src="../js/webgl-utils.js" type="text/javascript"></script>
+  <script src="../js/gl-matrix-2.2.1/common.js" type="text/javascript"></script>
+  <script src="../js/gl-matrix-2.2.1/vec3.js" type="text/javascript"></script>
+  <script src="../js/gl-matrix-2.2.1/mat3.js" type="text/javascript"></script>
+  <script src="../js/gl-matrix-2.2.1/mat4.js" type="text/javascript"></script>
+  <script src="app.js" type="text/javascript"></script>
+  <script id="vs" type="x-shader/x-vertex">
+    #version 100
+    attribute vec4 position;
+    attribute vec4 color;
+    uniform mat4 cameraToClipMatrix;
+    uniform mat4 modelToCameraMatrix;
+    varying lowp vec4 theColor;
+    void main() {
+      vec4 cameraPos = modelToCameraMatrix * position;
+      gl_Position = cameraToClipMatrix * cameraPos;
+      theColor = color;
+    }
+  </script>
+  <script id="fs" type="x-shader/x-fragment">
+    #version 100
+    varying lowp vec4 theColor;
+    void main() {
+      gl_FragColor = theColor;
+    }
+  </script>
+</head>
+<body onload="App.start(window, 'glcanvas')">
+  <canvas id="glcanvas">No canvas?</canvas>
+</body>
+</html>
